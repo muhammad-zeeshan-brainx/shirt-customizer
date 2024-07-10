@@ -52,8 +52,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/models' element={<Models />} />
-        <Route
+        <Route path='/' element={<Models />} />
+        {/* <Route
           path='/'
           element={
             <h1
@@ -63,7 +63,7 @@ function App() {
               <button>See Models</button>
             </h1>
           }
-        />
+        /> */}
 
         <Route path='*' element={<Navigate to='/' />} />
       </Routes>
