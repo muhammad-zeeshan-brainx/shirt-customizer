@@ -13,7 +13,7 @@ import { TextGeometry } from 'three/examples/jsm/Addons.js';
 import { useSpring, animated } from '@react-spring/web';
 import createTextCanvas from './TextureCanvas';
 import * as THREE from 'three';
-import { Box } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 
 export function Shirt({ model }) {
   const group = useRef();
@@ -107,7 +107,7 @@ export function Shirt({ model }) {
   }, []);
   console.log({ texture });
   return (
-    <group dispose={null} scale={3} position={[0, -2, 0]}>
+    <group dispose={null} scale={3} position={[0, -2.3, 0]}>
       <mesh
         geometry={nodes.Ribbing.geometry}
         material={materials.Body_FRONT_2664}
@@ -207,7 +207,7 @@ export function Shirt({ model }) {
       >
         {texture && (
           <Decal
-            debug={true}
+            debug={false}
             position={[logoPosition.x, logoPosition.y, logoPosition.z]}
             rotation={[0, 0, 0]}
             scale={logoProperties.scale}
@@ -222,6 +222,8 @@ export function Shirt({ model }) {
           flexDirection='column'
           alignItems='center'
           justifyContent='center'
+          position='absolute'
+          left='-6rem'
         >
           <label for='x-axis'>X-axis</label>
 

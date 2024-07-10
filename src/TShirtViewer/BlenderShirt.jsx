@@ -5,7 +5,7 @@ import { state } from './state';
 
 export default function BlenderShirt(props) {
   const { nodes, materials } = useGLTF('/blender-shirt.glb');
-  const logoTexture = useTexture('/img.jpg');
+  const logoTexture = useTexture('/logo2.png');
 
   const [logoPosition, setLogoPosition] = useState({ x: 0, y: 1.3, z: 0.1 });
 

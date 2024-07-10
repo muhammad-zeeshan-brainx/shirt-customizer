@@ -11,15 +11,16 @@ import JacketShirt from './TShirtViewer/JacketShirt';
 import MaleShirt1 from './TShirtViewer/MaleShirt1';
 import MaleShirt2 from './TShirtViewer/MaleShirt2';
 import ShirtRay from './TShirtViewer/ShirtRay';
+import { TestShirt } from './TShirtViewer/TestShirt';
 
 const Models = () => {
   return (
     <Box
       className='app-container'
       display='grid'
-      gridTemplateColumns='1fr 1fr'
+      gridTemplateColumns='1fr'
       gridAutoRows='400px'
-      justifyItems='center'
+      // justifyItems='center'
       height='100%'
     >
       <Box>
@@ -27,7 +28,8 @@ const Models = () => {
       </Box>
       {/* <Box>
         <TShirtViewer model={<BlenderShirt />} />
-      </Box>
+      </Box> */}
+      {/* 
       <Box>
         <TShirtViewer model={<JacketShirt />} />
       </Box>
@@ -38,7 +40,7 @@ const Models = () => {
         <TShirtViewer model={<ShirtRay />} />
       </Box> */}
 
-      <Box pt='7rem'>
+      <Box pt='7rem' position='absolute' right='10%' top='10%'>
         <ColorPicker />
       </Box>
     </Box>

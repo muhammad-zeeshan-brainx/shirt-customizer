@@ -2,7 +2,7 @@ import './TshirtViewer.css';
 
 import React, { useState, Suspense, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Html, OrbitControls } from '@react-three/drei';
+import { Environment, Html, OrbitControls } from '@react-three/drei';
 import { useSpring, animated } from '@react-spring/three';
 import { Shirt } from './Shirt';
 import { Box, TextField, Slider, Typography } from '@mui/material';
@@ -50,6 +50,13 @@ const RenderScene = ({ model }) => {
   return (
     <Box className='viewer-container'>
       <Canvas camera={{ position: cameraPosition }}>
+        {/* <Environment
+        files="/img/venice_sunset_1k.hdr"
+        background
+        backgroundBlurriness={0.5}
+      /> */}
+        <Environment preset='forest' background backgroundBlurriness={0.5} />
+
         <ambientLight intensity={1} />
         <spotLight
           intensity={0.5}
@@ -79,10 +86,10 @@ const RenderScene = ({ model }) => {
           />{' '}
         </Html> */}
       </Canvas>
-      {/* <div className='controls'>
+      <div className='controls'>
         <button onClick={handleFrontClick}>Front</button>
         <button onClick={handleBackClick}>Back</button>
-      </div> */}
+      </div>
     </Box>
   );
 };
