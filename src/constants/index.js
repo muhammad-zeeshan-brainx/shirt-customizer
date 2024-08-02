@@ -3,4 +3,5 @@ export const modelObjects = {
   backImage: 'backImage',
 };
 
-export const API_BASE_URL = 'http://localhost:3001/api/v1';
+export const API_BASE_URL =
+  'https://dalle-g5ja1tx4w-zee-db4177e9.vercel.app/api/v1';
