@@ -50,11 +50,6 @@ const RenderScene = ({ model }) => {
   return (
     <Box className='viewer-container'>
       <Canvas camera={{ position: cameraPosition }}>
-        {/* <Environment
-        files="/img/venice_sunset_1k.hdr"
-        background
-        backgroundBlurriness={0.5}
-      /> */}
         <Environment preset='forest' background backgroundBlurriness={0.5} />
 
         <ambientLight intensity={1} />
@@ -66,11 +61,7 @@ const RenderScene = ({ model }) => {
           castShadow
         />
         <Suspense fallback={null}>
-          <animated.group rotation={rotation}>
-            {/* <Shirt model={model} /> */}
-            {/* <BlenderShirt /> */}
-            {model}
-          </animated.group>
+          <animated.group rotation={rotation}>{model}</animated.group>
           <OrbitControls
             ref={orbitRef}
             enableZoom={false}
@@ -79,12 +70,6 @@ const RenderScene = ({ model }) => {
             enabled={!snap?.isDragging}
           />
         </Suspense>
-        {/* <Html>
-          <PullRelease
-            textPosition={textPosition}
-            setTextPosition={setTextPosition}
-          />{' '}
-        </Html> */}
       </Canvas>
       <div className='controls'>
         <button onClick={handleFrontClick}>Front</button>

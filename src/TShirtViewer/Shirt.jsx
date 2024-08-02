@@ -14,13 +14,24 @@ import { useSpring, animated } from '@react-spring/web';
 import createTextCanvas from './TextureCanvas';
 import * as THREE from 'three';
 import { Box, TextField } from '@mui/material';
+import { modelObjects } from '../constants';
+import { useLoader } from '@react-three/fiber';
+
+const modelName = 'vividora-compressed.glb';
 
 export function Shirt({ model }) {
   const group = useRef();
-  const shirtFrontRef = useRef();
-  const { nodes, materials } = useGLTF(`/shirt-compressed.glb`);
-  const logoTexture = useTexture('/logo1.png');
   const snap = useSnapshot(state);
+
+  const shirtFrontRef = useRef();
+
+  const { nodes, materials } = useGLTF(modelName);
+
+  const logoTexture = useTexture(snap.imageUrl || '/logo1.png');
+
+  console.log({ logoTexture });
+
+  const backLogoTexture = useTexture('background.jpg');
 
   const [textSize, setTextSize] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -28,7 +39,13 @@ export function Shirt({ model }) {
   const [text, setText] = useState('Hello, World!');
   const [textPosition, setTextPosition] = useState({ x: 0, y: 0 });
 
-  const [logoPosition, setLogoPosition] = useState({ x: 0, y: 1.3, z: 0.1 });
+  const [logoPosition, setLogoPosition] = useState({ x: 0, y: 0, z: 0.2 });
+
+  const [backLogoPosition, setBackLogoPosition] = useState({
+    x: 0,
+    y: 1.19,
+    z: -0.1,
+  });
 
   const [logoProperties, setLogoProperties] = useState({ scale: 0.3 });
 
@@ -92,175 +109,212 @@ export function Shirt({ model }) {
     });
   };
 
+  const handleChangePositionZ = (value) => {
+    setLogoPosition((prevPosition) => {
+      return { ...prevPosition, z: Number(value) };
+    });
+  };
+
   const handleChangeLogoScale = (value) => {
     setLogoProperties((prevProps) => {
       return { ...prevProps, scale: Number(value) };
     });
   };
 
-  console.log({ shirtFrontRef });
+  const handleImageClick = (e, side = '') => {
+    e.stopPropagation();
+    state.model.selectedImage = side;
+  };
 
   useEffect(() => {
     const { canvas } = createTextCanvas('Hello, World', 512, 512, 100);
     const texture = new THREE.CanvasTexture(canvas);
     setTexture(texture);
   }, []);
-  console.log({ texture });
   return (
+    //actual
     <group dispose={null} scale={3} position={[0, -2.3, 0]}>
       <mesh
-        geometry={nodes.Ribbing.geometry}
-        material={materials.Body_FRONT_2664}
-        material-color={snap.items.Body_FRONT_2664}
-      ></mesh>
-
-      <mesh
-        geometry={nodes.Ribbing_1.geometry}
-        material={materials.Body_FRONT_2664}
+        castShadow
+        receiveShadow
+        geometry={nodes.shoulder1.geometry}
+        material={materials.Popcorn_Terry_FRONT_2675}
         material-color={snap.items.Body_FRONT_2664}
       />
       <mesh
-        geometry={nodes.Ribbing_2.geometry}
-        material={materials.Body_FRONT_2664}
+        castShadow
+        receiveShadow
+        geometry={nodes.shoulder2.geometry}
+        material={materials.Popcorn_Terry_FRONT_2675}
         material-color={snap.items.Body_FRONT_2664}
       />
       <mesh
-        geometry={nodes.Ribbing_3.geometry}
-        material={materials.Body_FRONT_2664}
+        castShadow
+        receiveShadow
+        geometry={nodes.collar.geometry}
+        material={materials.Rib_Dark_FRONT_2661}
         material-color={snap.items.Body_FRONT_2664}
       />
       <mesh
-        geometry={nodes.Ribbing_4.geometry}
-        material={materials.Body_FRONT_2664}
+        castShadow
+        receiveShadow
+        geometry={nodes.frontprint.geometry}
+        material={materials['Popcorn_Terry_FRONT_2675.008']}
         material-color={snap.items.Body_FRONT_2664}
-      />
-      <mesh
-        geometry={nodes.Ribbing_5.geometry}
-        material={materials.Body_FRONT_2664}
-        material-color={snap.items.Body_FRONT_2664}
-      />
-      <mesh
-        geometry={nodes.Body_Front.geometry}
-        material={materials.Body_FRONT_2664}
-        material-color={snap.items.Body_FRONT_2664}
-      ></mesh>
-
-      <mesh
-        geometry={nodes.Body_Front_1.geometry}
-        material={materials.Body_FRONT_2664}
-        material-color='Red'
-      />
-      <mesh
-        geometry={nodes.Body_Front_2.geometry}
-        material={materials.Body_FRONT_2664}
-        material-color={snap.items.Body_FRONT_2664}
-      />
-      <mesh
-        geometry={nodes.Body_Back.geometry}
-        material={materials.Body_FRONT_2664}
-        material-color={snap.items.Body_FRONT_2664}
-      />
-      <mesh
-        geometry={nodes.Body_Back_1.geometry}
-        material={materials.Body_FRONT_2664}
-        material-color={snap.items.Body_FRONT_2664}
-      />
-      <mesh
-        geometry={nodes.Body_Back_2.geometry}
-        material={materials.Body_FRONT_2664}
-        material-color={snap.items.Body_FRONT_2664}
-      />
-      <mesh
-        geometry={nodes.Sleeves.geometry}
-        material={materials.Sleeves_FRONT_2669}
-        material-color={snap.items.Sleeves_FRONT_2669}
-      />
-      <mesh
-        geometry={nodes.Sleeves_1.geometry}
-        material={materials.Sleeves_FRONT_2669}
-        material-color={snap.items.Sleeves_FRONT_2669}
-      />
-      <mesh
-        geometry={nodes.Sleeves_2.geometry}
-        material={materials.Sleeves_FRONT_2669}
-        material-color={snap.items.Sleeves_FRONT_2669}
-      />
-      <mesh
-        geometry={nodes.Sleeves_3.geometry}
-        material={materials.Sleeves_FRONT_2669}
-        material-color={snap.items.Sleeves_FRONT_2669}
-      />
-      <mesh
-        geometry={nodes.Sleeves_4.geometry}
-        material={materials.Sleeves_FRONT_2669}
-        material-color={snap.items.Sleeves_FRONT_2669}
-      />
-      <mesh
-        geometry={nodes.Sleeves_5.geometry}
-        material={materials.Sleeves_FRONT_2669}
-        material-color={snap.items.Sleeves_FRONT_2669}
-      />
-      <mesh
-        geometry={nodes.Body_Front.geometry}
-        material={materials.Body_FRONT_2664}
-        ref={shirtFrontRef}
       >
-        {texture && (
+        {' '}
+        {logoTexture && snap?.imageUrl && (
           <Decal
             debug={false}
-            position={[logoPosition.x, logoPosition.y, logoPosition.z]}
+            position={[
+              state.model[`${modelObjects.frontImage}`]?.position.x,
+              state.model[`${modelObjects.frontImage}`]?.position.y,
+              state.model[`${modelObjects.frontImage}`]?.position.z,
+            ]}
             rotation={[0, 0, 0]}
-            scale={logoProperties.scale}
+            scale={state.model[`${modelObjects.frontImage}`]?.scale}
             map={logoTexture}
-            {...bind()}
+            onPointerDown={(e) => handleImageClick(e, modelObjects.frontImage)}
+
+            // {...bind()}
           ></Decal>
         )}
       </mesh>
-      <Html>
-        <Box
-          display='flex'
-          flexDirection='column'
-          alignItems='center'
-          justifyContent='center'
-          position='absolute'
-          left='-6rem'
-        >
-          <label for='x-axis'>X-axis</label>
-
-          <input
-            id='x-axis'
-            placeholder='change x-axis'
-            type='number'
-            step={0.01}
-            onChange={(e) => handleChangePositionX(e.target.value)}
-            defaultValue={logoPosition?.x}
-          />
-
-          <label for='y-axis'>Y-axis</label>
-
-          <input
-            id='y-axis'
-            placeholder='change y-axis'
-            type='number'
-            step={0.01}
-            onChange={(e) => handleChangePositionY(e.target.value)}
-            defaultValue={logoPosition?.y}
-          />
-
-          <label for='scale'>Scale</label>
-
-          <input
-            id='scale'
-            placeholder='scale'
-            type='number'
-            step={0.01}
-            onChange={(e) => handleChangeLogoScale(e.target.value)}
-            defaultValue={logoProperties.scale}
-          />
-        </Box>
-      </Html>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.backprint.geometry}
+        material={materials['Popcorn_Terry_FRONT_2675.008']}
+        material-color={snap.items.Body_FRONT_2664}
+      >
+        {texture && false && (
+          <Decal
+            debug={false}
+            position={[
+              state.model[`${modelObjects.backImage}`]?.position.x,
+              state.model[`${modelObjects.backImage}`]?.position.y,
+              state.model[`${modelObjects.backImage}`]?.position.z,
+            ]}
+            rotation={[0, Math.PI, 0]}
+            scale={state.model[`${modelObjects.backImage}`]?.scale}
+            map={backLogoTexture}
+            onPointerDown={(e) => handleImageClick(e, modelObjects.backImage)}
+          ></Decal>
+        )}
+      </mesh>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.front.geometry}
+        material={materials['Popcorn_Terry_FRONT_2675.008']}
+        material-color={snap.items.Body_FRONT_2664}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.back.geometry}
+        material={materials['Popcorn_Terry_FRONT_2675.008']}
+        material-color={snap.items.Body_FRONT_2664}
+      />
     </group>
+
+    // <group dispose={null} scale={3} position={[0, -2.3, 0]}>
+    //   <mesh
+    //     castShadow
+    //     receiveShadow
+    //     geometry={nodes.Collar.geometry}
+    //     material={materials.Rib_Dark_FRONT_2661}
+    //   />
+    //   <mesh
+    //     castShadow
+    //     receiveShadow
+    //     geometry={nodes.Shirt.geometry}
+    //     material={materials.Popcorn_Terry_FRONT_2675}
+    //   />
+    //   <mesh
+    //     castShadow
+    //     receiveShadow
+    //     geometry={nodes.Front_1.geometry}
+    //     material={materials.Popcorn_Terry_FRONT_2675}
+    //     material-color={snap.items.Body_FRONT_2664}
+    //   >
+    //     {' '}
+    // {/* {texture && (
+    //   <Decal
+    //     debug={true}
+    //     position={[logoPosition.x, logoPosition.y, logoPosition.z]}
+    //     rotation={[0, 0, 0]}
+    //     scale={logoProperties.scale}
+    //     map={logoTexture}
+    //     // {...bind()}
+    //   ></Decal>
+    // )} */}
+    //   </mesh>
+    //   <mesh
+    //     castShadow
+    //     receiveShadow
+    //     geometry={nodes.Back.geometry}
+    //     material={materials.Popcorn_Terry_FRONT_2675}
+    //   >
+    // {texture && (
+    //   <Decal
+    //     debug={false}
+    //     position={[
+    //       backLogoPosition.x,
+    //       backLogoPosition.y,
+    //       backLogoPosition.z,
+    //     ]}
+    //     rotation={[0, Math.PI, 0]}
+    //     scale={logoProperties.scale}
+    //     map={backLogoTexture}
+    //   ></Decal>
+    // )}
+    //   </mesh>
+    // <Html>
+    //   <Box
+    //     display='flex'
+    //     flexDirection='column'
+    //     alignItems='center'
+    //     justifyContent='center'
+    //     position='absolute'
+    //     left='-6rem'
+    //   >
+    //     <label for='x-axis'>X-axis</label>
+
+    //     <input
+    //       id='x-axis'
+    //       placeholder='change x-axis'
+    //       type='number'
+    //       step={0.01}
+    //       onChange={(e) => handleChangePositionX(e.target.value)}
+    //       defaultValue={logoPosition?.x}
+    //     />
+
+    //     <label for='y-axis'>Y-axis</label>
+
+    //     <input
+    //       id='y-axis'
+    //       placeholder='change y-axis'
+    //       type='number'
+    //       step={0.01}
+    //       onChange={(e) => handleChangePositionY(e.target.value)}
+    //       defaultValue={logoPosition?.y}
+    //     />
+
+    //     <label for='scale'>Scale</label>
+
+    //     <input
+    //       id='scale'
+    //       placeholder='scale'
+    //       type='number'
+    //       step={0.01}
+    //       onChange={(e) => handleChangeLogoScale(e.target.value)}
+    //       defaultValue={logoProperties.scale}
+    //     />
+    //   </Box>
+    // </Html>
+    // </group>
   );
 }
 
-useGLTF.preload('/shirt-compressed.glb');
+useGLTF.preload(modelName);
